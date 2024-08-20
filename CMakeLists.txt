@@ -5,5 +5,9 @@ include_directories("C:/Users/acsel/Documents/Programming/C++/Libs/SDL2-2.30.6/i
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(SDLSnake main.cpp)
+add_executable(SDLSnake main.cpp
+        Snake.cpp
+        Snake.h
+        Direction.h
+)
 target_link_libraries(SDLSnake "C:/Users/acsel/Documents/Programming/C++/Libs/SDL2-2.30.6/lib/x64/SDL2.lib")

@@ -19,8 +19,8 @@ private:
 
     //[headXCoordinate, headYCoordinate] [tailXCoordinate[0], tailYCoordinate[0]] ...
 
-    int headXCoordinate = SCREEN_WIDTH/2;
-    int headYCoordinate = SCREEN_HEIGHT/2;
+    int headXCoordinate = 5;
+    int headYCoordinate = 5;
 
     //an array of the x co-ordinates of the tail of the snake.
     //E.G. the first element in the array is the x co-ordinate of the first part of the tail of the snake.
@@ -42,7 +42,7 @@ public:
     void changeLength();
     unsigned int getLength();
 
-    void moveSnake(int);
+    void moveSnake();
 };
 
 #endif //SNAKE_H

@@ -22,22 +22,22 @@ int Snake::getHeadYLocation() {
 }
 
 
-void Snake::moveSnake(int speed) {
+void Snake::moveSnake() {
     int headX = headXCoordinate;
     int headY = headYCoordinate;
 
     switch (direction) {
         case UP:
-            headYCoordinate -= speed;
+            headYCoordinate -= 2 * length;
             break;
         case RIGHT:
-            headXCoordinate += speed;
+            headXCoordinate += 2 * length;
             break;
         case DOWN:
-            headYCoordinate += speed;
+            headYCoordinate += 2 * length;
             break;
         case LEFT:
-            headXCoordinate -= speed;
+            headXCoordinate -= 2 * length;
             break;
     }
 

@@ -1,7 +1,7 @@
 #define SDL_MAIN_HANDLED
 #define SCREEN_WIDTH  1920
 #define SCREEN_HEIGHT  1080
-#define UPDATE_INTERVAL 1.0f/20.0f
+#define UPDATE_INTERVAL 1.0f
 
 #include <iostream>
 #include <SDL.h>
@@ -69,7 +69,7 @@ int main() {
 
         // update
         while(accumulatedTime > UPDATE_INTERVAL) {
-            snake->moveSnake(2*snake->getLength());
+            snake->moveSnake();
             accumulatedTime -= UPDATE_INTERVAL;
         }
 
@@ -78,13 +78,16 @@ int main() {
         SDL_SetRenderDrawColor(game.renderer, 204, 51, 153, 255); //sets the colour
         SDL_RenderClear(game.renderer); //sets the colour of the background to be the colour on the line above
 
-        SDL_SetRenderDrawColor(game.renderer, 34, 255, 0, 255);
+        SDL_SetRenderDrawColor(game.renderer, 255, 87, 51, 255);
 
-        SDL_Rect head(snake->getHeadXLocation(), snake->getHeadYLocation(), 100, 100); //head
+        constexpr int STEP_SIZE = 50;
+
+        SDL_Rect head(snake->getHeadXLocation() * STEP_SIZE, snake->getHeadYLocation() * STEP_SIZE, STEP_SIZE, STEP_SIZE); //head
         SDL_RenderFillRect(game.renderer, &head);
 
+        SDL_SetRenderDrawColor(game.renderer, 34, 255, 0, 255);
         for(int i = 0; i < snake->getLength(); i++) {
-            SDL_Rect tailSection(snake->getTailXLocation(i), snake->getTailYLocation(i), 100 , 100); //creates the tail sections
+            SDL_Rect tailSection(snake->getTailXLocation(i) * STEP_SIZE, snake->getTailYLocation(i) * STEP_SIZE, STEP_SIZE , STEP_SIZE); //creates the tail sections
             SDL_RenderFillRect(game.renderer, &tailSection);
         }
 

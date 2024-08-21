@@ -1,7 +1,7 @@
 #define SDL_MAIN_HANDLED
 #define SCREEN_WIDTH  1920
 #define SCREEN_HEIGHT  1080
-#define UPDATE_INTERVAL 1.0f
+#define UPDATE_INTERVAL 0.5f
 
 #include <iostream>
 #include <SDL.h>
@@ -28,7 +28,6 @@ int main() {
     bool running = true;
 
     Snake* snake = new Snake();
-    snake->changeLength();
 
     Uint32 lastFrameTime = SDL_GetTicks();
     float accumulatedTime = 0.0f;

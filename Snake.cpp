@@ -4,6 +4,8 @@
 
 #include "Snake.h"
 
+#include <iostream>
+
 
 Direction Snake::getDirection(){
     return direction;
@@ -28,29 +30,32 @@ void Snake::moveSnake() {
 
     switch (direction) {
         case UP:
-            headYCoordinate -= 2 * length;
+            headYCoordinate -= 1;
             break;
         case RIGHT:
-            headXCoordinate += 2 * length;
+            headXCoordinate += 1;
             break;
         case DOWN:
-            headYCoordinate += 2 * length;
+            headYCoordinate += 1;
             break;
         case LEFT:
-            headXCoordinate -= 2 * length;
+            headXCoordinate -= 1;
             break;
+    }
+
+    std::cout << "length: " << length << std::endl;
+
+    for (unsigned int i = length - 1; i > 0; i--) {
+        std::cout << i << std::endl;
+        tailXCoordinate[i] = tailXCoordinate[i-1];
+        tailYCoordinate[i] = tailYCoordinate[i-1];
     }
 
     tailXCoordinate[0] = headX;
     tailYCoordinate[0] = headY;
-
-    for (unsigned int i = length - 1; i > 1; i--) {
-        tailXCoordinate[i] = tailXCoordinate[i--];
-        tailYCoordinate[i] = tailYCoordinate[i--];
-    }
 }
 void Snake::changeLength() {
-    length += 1;
+    length++;
 }
 void Snake::changeDirection(const Direction direction) {
     this->direction = direction;

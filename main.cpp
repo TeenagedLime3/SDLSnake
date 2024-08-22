@@ -1,10 +1,9 @@
 #define SDL_MAIN_HANDLED
-#define SCREEN_WIDTH  1920
-#define SCREEN_HEIGHT  1080
 #define UPDATE_INTERVAL 0.5f
 
 #include <iostream>
 #include <SDL.h>
+#include <numeric>
 
 #include "Snake.h"
 
@@ -20,15 +19,27 @@ int main() {
         return -1;
     }
 
-    game.window = SDL_CreateWindow("Snake", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    SDL_DisplayMode dm;
+
+    if (SDL_GetDesktopDisplayMode(0, &dm) != 0) {
+        SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
+        return 1;
+    }
+
+    const int WINDOW_WIDTH = dm.w/2;
+    const int WINDOW_HEIGHT = dm.h/2;
+
+    game.window = SDL_CreateWindow("Snake", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
     game.renderer = SDL_CreateRenderer(game.window, -1, SDL_RENDERER_ACCELERATED);
 
     SDL_Event event;
 
     bool running = true;
 
-    Snake* snake = new Snake();
+    int STEP_SIZE = std::gcd(WINDOW_WIDTH, WINDOW_HEIGHT);
 
+    Snake* snake = new Snake(WINDOW_WIDTH / (float) STEP_SIZE, WINDOW_HEIGHT / (float) STEP_SIZE);
+    
     Uint32 lastFrameTime = SDL_GetTicks();
     float accumulatedTime = 0.0f;
 
@@ -78,8 +89,6 @@ int main() {
         SDL_RenderClear(game.renderer); //sets the colour of the background to be the colour on the line above
 
         SDL_SetRenderDrawColor(game.renderer, 255, 87, 51, 255);
-
-        constexpr int STEP_SIZE = 50;
 
         SDL_Rect head(snake->getHeadXLocation() * STEP_SIZE, snake->getHeadYLocation() * STEP_SIZE, STEP_SIZE, STEP_SIZE); //head
         SDL_RenderFillRect(game.renderer, &head);

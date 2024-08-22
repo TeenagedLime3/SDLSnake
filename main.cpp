@@ -39,7 +39,7 @@ int main() {
     int STEP_SIZE = std::gcd(WINDOW_WIDTH, WINDOW_HEIGHT);
 
     Snake* snake = new Snake(WINDOW_WIDTH / (float) STEP_SIZE, WINDOW_HEIGHT / (float) STEP_SIZE);
-    
+
     Uint32 lastFrameTime = SDL_GetTicks();
     float accumulatedTime = 0.0f;
 
@@ -85,16 +85,21 @@ int main() {
 
         // render
 
-        SDL_SetRenderDrawColor(game.renderer, 204, 51, 153, 255); //sets the colour
+        SDL_SetRenderDrawColor(game.renderer, 15, 236, 241, 255); //sets the colour
         SDL_RenderClear(game.renderer); //sets the colour of the background to be the colour on the line above
 
-        SDL_SetRenderDrawColor(game.renderer, 255, 87, 51, 255);
+        SDL_SetRenderDrawColor(game.renderer, 241, 82, 15, 255); //head colour
 
         SDL_Rect head(snake->getHeadXLocation() * STEP_SIZE, snake->getHeadYLocation() * STEP_SIZE, STEP_SIZE, STEP_SIZE); //head
         SDL_RenderFillRect(game.renderer, &head);
 
-        SDL_SetRenderDrawColor(game.renderer, 34, 255, 0, 255);
         for(int i = 0; i < snake->getLength(); i++) {
+
+            if(i % 2 == 0) {
+                SDL_SetRenderDrawColor(game.renderer, 61, 241, 15, 255);
+            } else {
+                SDL_SetRenderDrawColor(game.renderer, 174, 241, 15, 255);
+            }
             SDL_Rect tailSection(snake->getTailXLocation(i) * STEP_SIZE, snake->getTailYLocation(i) * STEP_SIZE, STEP_SIZE , STEP_SIZE); //creates the tail sections
             SDL_RenderFillRect(game.renderer, &tailSection);
         }

@@ -73,13 +73,13 @@ void Snake::changeDirection(const Direction direction) {
 void Snake::wrapAround() {
     if(headXCoordinate < 0) {
         headXCoordinate = gridWidth - 1;
-    } else if (headXCoordinate > gridWidth){
+    } else if (headXCoordinate >= gridWidth){
         headXCoordinate = 0;
     }
 
     if(headYCoordinate < 0) {
         headYCoordinate = gridHeight - 1;
-    } else if (headYCoordinate > gridHeight) {
+    } else if (headYCoordinate >= gridHeight ) {
         headYCoordinate = 0;
     }
 }

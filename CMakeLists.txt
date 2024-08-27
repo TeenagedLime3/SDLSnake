@@ -9,5 +9,7 @@ add_executable(SDLSnake main.cpp
         Snake.cpp
         Snake.h
         Direction.h
+        Food.cpp
+        Food.h
 )
 target_link_libraries(SDLSnake "C:/Users/acsel/Documents/Programming/C++/Libs/SDL2-2.30.6/lib/x64/SDL2.lib")

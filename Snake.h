@@ -41,11 +41,10 @@ public:
     int getTailYLocation(int snakeIndex);
     int getHeadXLocation();
     int getHeadYLocation();
+    int getLength();
 
     void changeLength();
-    int getLength();
     void wrapAround();
-
     void moveSnake();
 };
 

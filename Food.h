@@ -13,7 +13,6 @@ private:
 public:
     Food(int xCoordinate, int yCoordinate);
 
-
     int getXCoordinate();
     int getYCoordinate();
 

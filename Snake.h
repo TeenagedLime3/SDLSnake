@@ -6,7 +6,11 @@
 #define SNAKE_H
 
 
+#include <list>
+#include <vector>
+
 #include "Direction.h"
+#include "Food.h"
 
 
 class Snake {
@@ -17,7 +21,7 @@ private:
     int gridWidth{};
     int gridHeight{};
 
-
+    std::list<Food>* foodList = nullptr;
     //[headXCoordinate, headYCoordinate] [tailXCoordinate[0], tailYCoordinate[0]] ...
 
     int headXCoordinate = 5;
@@ -37,15 +41,16 @@ public:
 
     void changeDirection(Direction direction);
     Direction getDirection();
-    int getTailXLocation(int snakeIndex);
-    int getTailYLocation(int snakeIndex);
-    int getHeadXLocation();
-    int getHeadYLocation();
+    int getTailXCoordinate(int snakeIndex);
+    int getTailYCoordinate(int snakeIndex);
+    int getHeadXCoordinate();
+    int getHeadYCoordinate();
     int getLength();
 
     void changeLength();
     void wrapAround();
     void moveSnake();
+    void eatFoodIfTouching(std::list<Food>& FOOD_LIST);
 };
 
 #endif //SNAKE_H

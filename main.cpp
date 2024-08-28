@@ -2,6 +2,7 @@
 #define UPDATE_INTERVAL 0.5f
 
 #include <iostream>
+#include <list>
 #include <SDL.h>
 #include <numeric>
 #include <random>
@@ -40,6 +41,7 @@ int main() {
     const int STEP_SIZE = std::gcd(WINDOW_WIDTH, WINDOW_HEIGHT);
     const int GRID_WIDTH = WINDOW_WIDTH / (float) STEP_SIZE;
     const int GRID_HEIGHT = WINDOW_HEIGHT / (float) STEP_SIZE;
+    std::list<Food> FOOD_LIST;
 
     game.window = SDL_CreateWindow("Snake", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
     game.renderer = SDL_CreateRenderer(game.window, -1, SDL_RENDERER_ACCELERATED);
@@ -52,7 +54,7 @@ int main() {
     Uint32 lastFrameTime = SDL_GetTicks();
     float accumulatedTime = 0.0f;
 
-        std::vector<Food> foodList;
+    
 
     snake->changeLength();
     snake->changeLength();
@@ -101,10 +103,15 @@ int main() {
         while(accumulatedTime > UPDATE_INTERVAL) {
             snake->moveSnake();
 
+            snake->eatFoodIfTouching(FOOD_LIST);
+
             int randomXCoordinate = getRandomNumber(0, GRID_WIDTH);
             int randomYCoordinate = getRandomNumber(0, GRID_HEIGHT);
 
-            foodList.emplace_back(randomXCoordinate, randomYCoordinate); //creates a new food and adds it to the vector
+            if (FOOD_LIST.empty()) {
+                std::cout << FOOD_LIST.size() << std::endl;
+                FOOD_LIST.emplace_back(randomXCoordinate, randomYCoordinate); //creates a new food and adds it to the vector
+            }
 
             accumulatedTime -= UPDATE_INTERVAL;
         }
@@ -114,17 +121,15 @@ int main() {
         SDL_SetRenderDrawColor(game.renderer, 15, 236, 241, 255); //sets the colour
         SDL_RenderClear(game.renderer); //sets the colour of the background to be the colour on the line above
 
-        SDL_SetRenderDrawColor(game.renderer, 241, 82, 15, 255); //head colour
-
-        SDL_Rect head(snake->getHeadXLocation() * STEP_SIZE, snake->getHeadYLocation() * STEP_SIZE, STEP_SIZE, STEP_SIZE); //head
-        SDL_RenderFillRect(game.renderer, &head);
-
         SDL_SetRenderDrawColor(game.renderer, 255, 191, 0, 255); //FOOD
-        for (Food food : foodList) {
-            std::cout << food.getXCoordinate() << " " << food.getYCoordinate() << std::endl;
+        for (Food food : FOOD_LIST) {
             SDL_Rect foodIcon(food.getXCoordinate() * STEP_SIZE, food.getYCoordinate() * STEP_SIZE, STEP_SIZE , STEP_SIZE);
             SDL_RenderFillRect(game.renderer, &foodIcon);
         }
+
+        SDL_SetRenderDrawColor(game.renderer, 241, 82, 15, 255); //head colour
+        SDL_Rect head(snake->getHeadXCoordinate() * STEP_SIZE, snake->getHeadYCoordinate() * STEP_SIZE, STEP_SIZE, STEP_SIZE); //head
+        SDL_RenderFillRect(game.renderer, &head);
 
         for(int i = 0; i < snake->getLength(); i++) {
 
@@ -133,12 +138,10 @@ int main() {
             } else {
                 SDL_SetRenderDrawColor(game.renderer, 174, 241, 15, 255);
             }
-            SDL_Rect tailSection(snake->getTailXLocation(i) * STEP_SIZE, snake->getTailYLocation(i) * STEP_SIZE, STEP_SIZE , STEP_SIZE); //creates the tail sections
+            SDL_Rect tailSection(snake->getTailXCoordinate(i) * STEP_SIZE, snake->getTailYCoordinate(i) * STEP_SIZE, STEP_SIZE , STEP_SIZE); //creates the tail sections
             SDL_RenderFillRect(game.renderer, &tailSection);
         }
-
-
-
+        
         SDL_RenderPresent(game.renderer); //updates the screen
     }
 

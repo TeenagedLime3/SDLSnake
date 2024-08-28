@@ -29,11 +29,11 @@ private:
 
     //an array of the x co-ordinates of the tail of the snake.
     //E.G. the first element in the array is the x co-ordinate of the first part of the tail of the snake.
-    int tailXCoordinate[10]{};
+    std::vector<int> tailXCoordinate;
 
     //an array of the y co-ordinates of the tail of the snake.
     //E.G. the first element in the array is the y co-ordinate of the first part of the tail of the snake.
-    int tailYCoordinate[10]{};
+    std::vector<int> tailYCoordinate;
 
 
 public:

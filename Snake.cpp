@@ -69,6 +69,8 @@ void Snake::moveSnake() {
 }
 
 void Snake::changeLength() {
+    tailXCoordinate.push_back(headXCoordinate);
+    tailYCoordinate.push_back(headYCoordinate);
     length++;
 }
 void Snake::changeDirection(const Direction direction) {
@@ -89,9 +91,7 @@ void Snake::wrapAround() {
 }
 
 void Snake::eatFoodIfTouching(std::list<Food>& foodList) {
-    std::cout << foodList.size() << std::endl;
     foodList.remove_if([this](Food& food) {
-        std::cout << "nom" << std::endl;
         return getHeadXCoordinate() == food.getXCoordinate() && getHeadYCoordinate() == food.getYCoordinate();
     });
     // LAMBDA (inline method)

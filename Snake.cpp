@@ -98,3 +98,12 @@ void Snake::eatFoodIfTouching(std::list<Food>& foodList) {
     // for each food (Food& food) in foodList,
     // remove if (remove_if) this is true: (return getHeadXCoordinate() == food.getXCoordinate() && getHeadYCoordinate() == food.getYCoordinate())
 }
+
+bool Snake::isTouchingTail() {
+    for(int i = 0; i < length; i++) {
+        if(headXCoordinate == tailXCoordinate[i] && headYCoordinate == tailYCoordinate[i]) {
+            return true;
+        }
+    }
+    return false;
+}

@@ -100,6 +100,10 @@ int main() {
 
             snake->eatFoodIfTouching(FOOD_LIST);
 
+            if(snake->isTouchingTail()) {
+                return 0;
+            }
+
             if (FOOD_LIST.empty()) {
                 int randomXCoordinate = getRandomNumber(0, GRID_WIDTH - 1);
                 int randomYCoordinate = getRandomNumber(0, GRID_HEIGHT - 1);
@@ -110,7 +114,6 @@ int main() {
 
                 for(int i = 0; i < snake->getLength(); i++) {
                     if(snake->getTailXCoordinate(i) == randomXCoordinate && snake->getTailYCoordinate(i) == randomYCoordinate) {
-                        std::cout << "INSIDE TAIL!" << std::endl;
                         isInsideTail = true;
                     }
                 }

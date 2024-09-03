@@ -50,7 +50,9 @@ public:
     void changeLength();
     void wrapAround();
     void moveSnake();
+    
     void eatFoodIfTouching(std::list<Food>& FOOD_LIST);
+    bool isTouchingTail();
 };
 
 #endif //SNAKE_H

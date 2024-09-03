@@ -1,5 +1,5 @@
 #define SDL_MAIN_HANDLED
-#define UPDATE_INTERVAL 0.25f
+#define UPDATE_INTERVAL 0.5f
 
 #include <iostream>
 #include <list>
@@ -53,10 +53,7 @@ int main() {
     bool running = true;
     Uint32 lastFrameTime = SDL_GetTicks();
     float accumulatedTime = 0.0f;
-    
-    snake->changeLength();
-    snake->changeLength();
-    snake->changeLength();
+
 
     std::cout << "STEP SIZE:" << STEP_SIZE << std::endl;
     std::cout << "GRID_WIDTH:" << GRID_WIDTH << std::endl;
@@ -109,8 +106,19 @@ int main() {
 
                 std::cout << randomXCoordinate << " " << randomYCoordinate << std::endl;
 
-                FOOD_LIST.emplace_back(randomXCoordinate, randomYCoordinate); //creates a new food and adds it to the vector
-                snake->changeLength();
+                bool isInsideTail = false;
+
+                for(int i = 0; i < snake->getLength(); i++) {
+                    if(snake->getTailXCoordinate(i) == randomXCoordinate && snake->getTailYCoordinate(i) == randomYCoordinate) {
+                        std::cout << "INSIDE TAIL!" << std::endl;
+                        isInsideTail = true;
+                    }
+                }
+
+                if (!isInsideTail) {
+                    FOOD_LIST.emplace_back(randomXCoordinate, randomYCoordinate); //creates a new food and adds it to the vector
+                    snake->changeLength();
+                }
             }
 
             accumulatedTime -= UPDATE_INTERVAL;

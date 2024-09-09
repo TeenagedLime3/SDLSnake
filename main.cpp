@@ -44,7 +44,7 @@ int main() {
     std::list<Food> FOOD_LIST;
 
     game.window = SDL_CreateWindow("Snake", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
-    game.renderer = SDL_CreateRenderer(game.window, -1, SDL_RENDERER_ACCELERATED);
+    game.renderer = SDL_CreateRenderer(game.window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
     Snake* snake = new Snake(GRID_WIDTH, GRID_HEIGHT);
 
@@ -101,7 +101,7 @@ int main() {
             snake->eatFoodIfTouching(FOOD_LIST);
 
             if(snake->isTouchingTail()) {
-                return 0;
+                running = false;
             }
 
             if (FOOD_LIST.empty()) {
@@ -128,7 +128,6 @@ int main() {
         }
 
         // render
-
         SDL_SetRenderDrawColor(game.renderer, 15, 236, 241, 255); //sets the colour
         SDL_RenderClear(game.renderer); //sets the colour of the background to be the colour on the line above
 
